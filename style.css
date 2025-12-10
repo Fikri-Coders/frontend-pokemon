@@ -1,0 +1,237 @@
+/* Reset Dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* KUNCI: Agar padding tidak merusak ukuran width */
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    /* --- PERBAIKAN BACKGROUND --- */
+    background-image: url('assets/background-pokemon.png');
+    
+    /* Memperpanjang gambar secara horizontal - 100% lebar, tinggi otomatis */
+    background-size: 100% auto; 
+    
+    /* KUNCI: Kunci gambar di TENGAH ATAS. 
+       Ini memaksa Logo Pokemon (yang ada di atas gambar) selalu terlihat */
+    background-position: center top; 
+    
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Agar background tetap saat scroll */
+    
+    /* Background color sebagai fallback jika ada ruang kosong */
+    background-color: #87CEEB; /* Warna langit biru sebagai fallback */
+    
+    height: 100vh;
+    width: 100%;
+    overflow: hidden; /* Satu window, tidak ada scroll */
+
+    /* --- PERBAIKAN POSISI KARTU --- */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Tengah secara horizontal (kiri-kanan) */
+    
+    /* Kita pakai flex-end agar konten turun ke bawah, 
+       memberi ruang untuk Logo di atas */
+    justify-content: flex-end; 
+    
+    /* Beri jarak dari lantai bawah sesuai selera visual (sekitar 5-8% layar) */
+    padding-bottom: 5vh; 
+}
+
+/* --- KARTU UTAMA (FORM REGISTER) --- */
+.register-card {
+    /* Data Layout */
+    width: 400px; /* Lebar fix */
+    height: 600px; /* Tinggi fix */
+    
+    /* Data Warna & Opacity */
+    background-color: rgba(245, 245, 245, 0.9); /* #F5F5F5 90% */
+    
+    /* Data Border */
+    border: 2px solid #FFFFFF;
+    border-radius: 20px;
+    
+    /* Layout Isi Kartu */
+    padding: 30px 40px; /* Kiri Kanan 40px agar konten tidak terlalu mepet tepi */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    
+    /* Shadow agar kartu lebih pop-up */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* Judul: Welcome New Trainer! */
+.register-card h2 {
+    /* Data Typography */
+    font-weight: 700;
+    font-size: 28px; /* Sedikit disesuaikan agar muat */
+    color: #333333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* --- STRUKTUR INPUT (LABEL & BOX) --- */
+.input-group {
+    width: 300px; /* Agar memenuhi lebar container (320px sisa padding) */
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+/* Baris Label (Icon + Teks) */
+.input-group label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+/* Ikon Vector */
+.vector-icon {
+    /* Data Vector */
+    width: 16px; 
+    margin-right: 8px;
+    color: #000;
+}
+
+/* Kotak Input (Rectangle 2) */
+.input-group input {
+    /* PERBAIKAN MELEBAR: Width 100% dari container induknya */
+    width: 100%; 
+    height: 40px; /* Tinggi wajar input */
+    padding: 0 15px;
+    border-radius: 10px; 
+    border: none; 
+    background-color: #FFFFFF; /* Warna Putih Polos */
+    font-size: 14px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* --- TOMBOL REGISTER (POKEBALL) --- */
+.btn-pokeball {
+    position: relative;
+    /* Data Layout Tombol */
+    width: 193px;
+    height: 60px;
+    border-radius: 20px;
+    
+    /* Data Border Tombol */
+    border: 3px solid #000000;
+    
+    /* Data Gradient Tombol */
+    background: linear-gradient(to bottom, #FFFFFF 50%, #FF0000 50%);
+    
+    margin-top: 15px;
+    margin-left: 40px;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.btn-pokeball:hover {
+    transform: scale(1.05);
+}
+
+/* Teks REGISTER */
+.btn-pokeball span {
+    /* Data Text Register */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #000000;
+    position: relative;
+    z-index: 10;
+    text-shadow: 0px 0px 4px rgba(255,255,255,0.8);
+}
+
+/* Garis Tengah Hitam (Rectangle 5) */
+.btn-pokeball::before {
+    content: '';
+    position: absolute;
+    /* Data Rectangle 5 */
+    width: 100%;
+    height: 3px; /* Ditebalkan visual agar sama dengan border */
+    background-color: #000000;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+/* Lingkaran Tengah Putih (Ellipse 1) */
+.btn-pokeball::after {
+    content: '';
+    position: absolute;
+    /* Data Ellipse 1 */
+    width: 37px;
+    height: 32px;
+    background-color: #FFFFFF;
+    border: 3px solid #000000;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+/* Footer Link */
+.footer-link {
+    /* Data Layout */
+    margin-top: 15px;
+}
+
+.footer-link p {
+    font-size: 13px;
+    font-weight: 700;
+    color: #000000;
+}
+
+.footer-link a {
+    color: #000000;
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+
+/* --- KHUSUS HALAMAN LOGIN --- */
+
+/* Kita pakai teknik 'Grouping Selector'.
+   Artinya: .login-card punya gaya yang SAMA PERSIS dengan .register-card */
+   .login-card {
+    /* Copy semua properti dasar dari register-card */
+    width: 400px;
+    /* Height dikurangi karena input cuma 2. 
+       Register 600px. Login kita buat 450px - 500px biar pas */
+    height: 480px; 
+    
+    background-color: rgba(245, 245, 245, 0.9);
+    border: 2px solid #FFFFFF;
+    border-radius: 20px;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* Judul Login */
+.login-card h2 {
+    font-weight: 700;
+    font-size: 28px;
+    color: #333333;
+    margin-bottom: 30px; /* Jarak ke input lebih lega dikit */
+    text-align: center;
+}
+
+/* Pastikan style input, button, dll otomatis ngikut yang sudah ada di atas.
+   Jadi tidak perlu nulis ulang CSS untuk .input-group atau .btn-pokeball */
