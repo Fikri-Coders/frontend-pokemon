@@ -235,3 +235,675 @@ body {
 
 /* Pastikan style input, button, dll otomatis ngikut yang sudah ada di atas.
    Jadi tidak perlu nulis ulang CSS untuk .input-group atau .btn-pokeball */
+
+
+
+
+
+/* --- HALAMAN CHOOSE CHARACTER --- */
+
+/* Judul Halaman */
+.page-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    color: #FFFFFF;
+    /* Memberikan outline biru gelap agar teks terbaca jelas di background hutan */
+    text-shadow: 
+        -2px -2px 0 #003A70,  
+         2px -2px 0 #003A70,
+        -2px  2px 0 #003A70,
+         2px  2px 0 #003A70;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Container untuk membungkus 3 kartu agar sejajar */
+.character-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* Jarak antar kartu */
+    flex-wrap: wrap; /* Agar aman jika layar kekecilan */
+    width: 100%;
+}
+
+/* --- KARTU KARAKTER (Base Style) --- */
+.char-card {
+    /* Data Layout Kartu */
+    width: 308px;
+    height: 605px;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    
+    /* Layout Flex untuk isi kartu (Nama - Gambar - Tombol) */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+}
+
+/* Efek Hover biar kartu naik dikit pas dipilih */
+.char-card:hover {
+    transform: translateY(-10px);
+}
+
+/* Nama Karakter (Header) */
+.char-name {
+    /* Data Typography */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800; /* ExtraBold */
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #000000;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Gambar Karakter */
+.char-img {
+    /* Data Layout Image */
+    width: 269px;
+    height: 400px; /* Saya sesuaikan tinggi ini agar muat dengan tombol */
+    object-fit: cover; /* Agar gambar crop rapi */
+    object-position: top;
+    border-radius: 10px;
+    margin-bottom: auto; /* Dorong tombol ke paling bawah */
+}
+
+/* Tombol Select */
+.btn-select {
+    /* Data Layout Button */
+    width: 144px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    
+    /* Data Typography Button */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 18px; /* 24px terlalu besar untuk tombol 40px, saya kecilkan dikit biar rapi */
+    color: #FFFFFF;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* --- VARIANT WARNA TIM --- */
+
+/* Team Mystic (Biru) - BLANCHE */
+.card-blue {
+    /* Data Border */
+    border: 4px solid #2196F3;
+}
+.card-blue .btn-select {
+    background-color: #2196F3; /* Warna sama dengan border */
+}
+
+/* Team Valor (Merah) - CANDELA */
+.card-red {
+    border: 4px solid #F44336; /* Warna Merah Valor */
+}
+.card-red .btn-select {
+    background-color: #F44336;
+}
+
+/* Team Instinct (Kuning) - SPARK */
+.card-yellow {
+    border: 4px solid #FFC107; /* Warna Kuning Instinct */
+}
+.card-yellow .btn-select {
+    background-color: #FFC107;
+}
+
+
+
+
+
+/* --- DASHBOARD STYLES --- */
+
+/* 1. Header Navigation */
+.dashboard-header {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100; /* Agar selalu di atas karakter */
+}
+
+.nav-left img {
+    /* Data Logo */
+    width: 102px;
+    height: 56px;
+}
+
+.nav-center {
+    /* Data My Team Text */
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-shadow: 0px 2px 4px rgba(0,0,0,0.5); /* Shadow agar terbaca */
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    /* Data Thunder Boy */
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+}
+
+.logout-icon {
+    font-size: 24px;
+    color: #FFF;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.logout-icon:hover { color: #ff4757; }
+
+/* 2. Layout Utama Dashboard */
+.dashboard-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden; /* Mencegah scroll */
+}
+
+/* 3. Karakter (Posisi Kiri Bawah) */
+.dashboard-char-img {
+    /* Data Image Layout */
+    position: absolute;
+    bottom: 0;
+    left: 5%; 
+    height: 85vh; /* Tinggi menyesuaikan layar agar tidak kepotong */
+    width: auto;
+    z-index: 10;
+    /* Filter shadow agar karakter menyatu dengan bg */
+    filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.4));
+}
+
+/* 4. Widget Data User (Glassmorphism) */
+.user-widget {
+    /* Data Rectangle 11 */
+    width: 220px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.1); /* White 10% */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Border White 20% */
+    border-radius: 15px;
+    backdrop-filter: blur(20px); /* Blur efek kaca */
+    
+    position: absolute;
+    bottom: 30%; /* Mengambang di sebelah karakter */
+    left: 28%; /* Sesuaikan agar pas di samping karakter */
+    z-index: 20;
+    
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.widget-title {
+    /* Data LEVEL 5 */
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Progress Bar */
+.progress-bg {
+    /* Data Rectangle 12 */
+    width: 180px;
+    height: 6px;
+    background: rgba(51, 51, 51, 0.2); /* #333 20% */
+    border-radius: 3px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    /* Data Rectangle 13 */
+    height: 100%;
+    background-color: #FF0004; /* Merah default level */
+    width: 50%; /* Contoh Level progress */
+}
+
+.widget-stats {
+    display: flex;
+    justify-content: space-between;
+    /* Data Wins/Lose */
+    font-size: 14px; /* Saya kecilkan dikit dari 20px biar muat */
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+}
+
+.widget-partner {
+    font-size: 11px;
+    color: #EEE;
+    font-weight: 500;
+}
+
+/* 5. Tombol Battle (Kanan) */
+.btn-battle-container {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
+    z-index: 20;
+}
+
+.btn-battle {
+    /* Data Layout Tombol */
+    width: 280px;
+    height: 70px;
+    border-radius: 35px;
+    border: 3px solid #FFFFFF;
+    
+    /* Data Gradient */
+    background: linear-gradient(to right, #FFD700, #FF8C00); 
+    
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.2s, filter 0.2s;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-battle:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.btn-battle span {
+    /* Data Text BATTLE */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    color: #FFFFFF;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+
+
+
+
+
+
+/* --- HALAMAN MY TEAM (Final & Compact) --- */
+
+/* Kita pastikan body menggunakan background hutan yang fixed */
+body {
+    background-image: url('assets/background-pokemon.png'); /* */
+    background-size: cover;
+    background-position: center top; 
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* KUNCI: Background diam saat konten discroll */
+    height: 100vh;
+    width: 100%;
+    overflow: hidden; /* Scroll hanya di dalam container, bukan body */
+}
+
+/* Container Utama Halaman Team */
+.team-page-container {
+    width: 100%;
+    height: 100vh;
+    padding-top: 120px; /* Memberi ruang untuk Header di atas */
+    padding-bottom: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    
+    /* Layout Grid agar kartu rapi */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    gap: 30px; /* Jarak antar kartu */
+    
+    /* Agar bisa di-scroll jika kartu banyak */
+    overflow-y: auto; 
+}
+
+/* Sembunyikan scrollbar container biar bersih */
+.team-page-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* --- STYLE KARTU (UKURAN COMPACT/FIT SCREEN) --- */
+.pokemon-card {
+    /* Ukuran disesuaikan agar muat di layar laptop standar */
+    width: 440px; 
+    height: 270px;
+    border-radius: 15px;
+    
+    display: flex;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s;
+    background-color: #FFFFFF;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Kolom Kiri (Gambar) */
+.card-img-col {
+    width: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.poke-thumb {
+    width: 130px; /* Ukuran gambar pas */
+    height: auto;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+}
+
+/* Kolom Kanan (Info) */
+.card-info-col {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 15px;
+}
+
+.poke-name {
+    /* */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 22px; /* Ukuran font disesuaikan */
+    text-transform: uppercase;
+    color: #000;
+    margin-bottom: 5px;
+    line-height: 1.2;
+}
+
+.poke-detail {
+    /* */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 2px;
+}
+
+/* --- TOMBOL AKSI --- */
+.card-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Tombol Status (Activated / Set As Active) */
+.btn-status {
+    /* Ukuran tombol dikecilkan agar proporsional */
+    width: 130px;
+    height: 45px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #000;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Tombol Icon (Edit & Hapus) */
+.btn-icon-action {
+    width: 50px;
+    height: 45px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #F49044; /* */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: filter 0.2s;
+}
+
+.btn-icon-action:hover {
+    filter: brightness(1.1);
+}
+
+/* --- TEMA WARNA KARTU --- */
+.theme-green {
+    background-color: #E1F9E1; /* */
+    border: 3px solid #88A4B2;
+}
+
+.theme-orange {
+    background-color: #FFE5D4; 
+    border: 3px solid #F49044; 
+}
+
+.btn-orange-fill {
+    background-color: #F49044; /* */
+}
+
+/* --- KARTU CATCH NEW --- */
+.card-add-new {
+    width: 440px;
+    height: 270px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card-add-new:hover {
+    transform: scale(1.02);
+}
+
+.icon-plus-large {
+    font-size: 60px; /* */
+    color: #DC3C3C;
+    margin-bottom: 10px;
+}
+
+.text-catch-new {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 24px; /* */
+    color: #000;
+}
+
+
+
+
+/* --- HALAMAN BATTLE (ARENA) --- */
+
+/* Override Background khusus halaman Battle */
+.battle-body {
+    background-image: url('assets/background-battle.jpg') !important; /* */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.battle-container {
+    width: 100%;
+    height: 100vh;
+    position: relative; /* Jadi patokan koordinat absolute */
+    overflow: hidden;
+}
+
+/* --- SCOREBOARD / HUD (ATAS) --- */
+.scoreboard {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.7); /* Hitam transparan */
+    border: 2px solid #00d2ff; /* Border neon biru */
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 50;
+    box-shadow: 0 0 20px #00d2ff; /* Efek glow neon */
+}
+
+.score-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #FFFFFF;
+    text-shadow: 0 0 10px #FFF;
+}
+
+/* --- VS TEXT (TENGAH) --- */
+.vs-text {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 120px;
+    font-style: italic;
+    
+    /* Gradient Emas Text */
+    background: linear-gradient(to bottom, #FFD700, #FF8C00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    z-index: 10;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+    animation: pulse 2s infinite; /* Animasi denyut */
+}
+
+@keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* --- POSISI KARAKTER (PLAYER - KIRI BAWAH) --- */
+.player-area {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    z-index: 20;
+    display: flex;
+    align-items: flex-end; /* Karakter & Pokemon sejajar kaki */
+}
+
+.player-char {
+    height: 450px; /* Ukuran Trainer */
+    width: auto;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+    transition: transform 0.3s;
+}
+
+.player-pokemon {
+    height: 250px; /* Ukuran Pokemon lebih kecil dari trainer */
+    width: auto;
+    margin-right: -50px; /* Sedikit overlap biar akrab */
+    z-index: 21; /* Pokemon di depan trainer */
+    filter: drop-shadow(0 0 15px orange); /* Glow sesuai elemen api */
+}
+
+/* --- POSISI MUSUH (BOT - KANAN ATAS/TENGAH) --- */
+.bot-area {
+    position: absolute;
+    top: 25%; /* Agak ke atas untuk efek perspektif jauh */
+    right: 100px;
+    z-index: 15;
+    transform: scale(0.8); /* Dikecilkan dikit biar kelihatan jauh (Perspektif) */
+}
+
+.bot-char {
+    height: 400px;
+    width: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.5)); /* Glow jahat merah */
+}
+
+/* --- TOMBOL AKSI (BAWAH TENGAH) --- */
+.battle-controls {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 30px;
+    z-index: 100;
+}
+
+.btn-action {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid #FFF;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: white;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.btn-action:hover {
+    transform: scale(1.1);
+}
+
+/* Warna Tombol Spesifik */
+.btn-attack {
+    background: linear-gradient(135deg, #FF416C, #FF4B2B); /* Merah Api */
+    box-shadow: 0 0 20px #FF4B2B;
+}
+
+.btn-skill {
+    background: linear-gradient(135deg, #F7971E, #FFD200); /* Oranye Skill */
+    box-shadow: 0 0 20px #F7971E;
+}
+
+.btn-defend {
+    background: linear-gradient(135deg, #2C3E50, #4CA1AF); /* Biru/Grey Shield */
+    box-shadow: 0 0 20px #4CA1AF;
+}

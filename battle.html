@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Battle Arena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS GABUNGAN (INTERNAL) --- */
+        
+        /* Reset Dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Background Khusus Battle - Langsung tembak di body */
+        body {
+            /* Pastikan nama file background benar: background-battle.jpg */
+            background-image: url('assets/background-battle.png'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden; /* Biar gak bisa discroll */
+        }
+
+        /* Container Utama */
+        .battle-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* --- HEADER NAVIGATION (Transparan) --- */
+        .dashboard-header {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .nav-left img {
+            height: 50px;
+            width: auto;
+        }
+
+        /* --- SCOREBOARD / HUD (ATAS) --- */
+        .scoreboard {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            max-width: 800px;
+            height: 90px;
+            
+            /* Glass Effect Gelap Neon */
+            background: rgba(0, 0, 0, 0.6); 
+            border: 2px solid #00d2ff; 
+            border-radius: 15px;
+            
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            z-index: 50;
+            box-shadow: 0 0 15px #00d2ff, inset 0 0 20px rgba(0, 210, 255, 0.2);
+        }
+
+        .score-text {
+            font-weight: 700;
+            font-size: 24px;
+            color: #FFFFFF;
+            text-shadow: 0 0 5px rgba(255,255,255,0.8);
+            text-transform: uppercase;
+        }
+
+        /* --- VS TEXT (TENGAH) --- */
+        .vs-text {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            
+            font-weight: 900;
+            font-size: 100px;
+            font-style: italic;
+            
+            /* Gradient Emas */
+            background: linear-gradient(to bottom, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            z-index: 10;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* --- POSISI PLAYER (KIRI BAWAH) --- */
+        .player-area {
+            position: absolute;
+            bottom: 40px;
+            left: 60px;
+            z-index: 20;
+            display: flex;
+            align-items: flex-end; 
+        }
+
+        .player-char {
+            height: 420px; /* Tinggi Trainer */
+            width: auto;
+            margin-left: 50px; 
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+        }
+
+        .player-pokemon {
+            height: 220px; /* Tinggi Pokemon */
+            width: auto;
+            margin-right: -60px; 
+            z-index: 21;
+            filter: drop-shadow(0 0 15px rgba(255, 165, 0, 0.6)); /* Glow Orange */
+        }
+
+        /* --- POSISI MUSUH (BOT - KANAN ATAS) --- */
+        .bot-area {
+            position: absolute;
+            top: 28%; 
+            right: 120px;
+            z-index: 15;
+            /* Efek perspektif jauh (lebih kecil & agak gelap) */
+            transform: scale(0.85); 
+        }
+
+        .bot-char {
+            height: 380px;
+            width: auto;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4)); /* Glow Merah Jahat */
+        }
+
+        /* --- TOMBOL AKSI (BAWAH TENGAH) --- */
+        .battle-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 25px;
+            z-index: 100;
+        }
+
+        .btn-action {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 4px solid #FFFFFF;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            color: white;
+            transition: transform 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .btn-action:hover {
+            transform: scale(1.1);
+        }
+
+        /* Warna-warna tombol */
+        .btn-attack {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b); /* Merah */
+            box-shadow: 0 0 20px rgba(255, 75, 43, 0.6);
+        }
+
+        .btn-skill {
+            background: linear-gradient(135deg, #f7971e, #ffd200); /* Kuning */
+            box-shadow: 0 0 20px rgba(255, 210, 0, 0.6);
+        }
+
+        .btn-defend {
+            background: linear-gradient(135deg, #2c3e50, #4ca1af); /* Biru Abu */
+            box-shadow: 0 0 20px rgba(76, 161, 175, 0.6);
+        }
+
+        .logout-icon {
+            font-size: 30px; 
+            color: white;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        .logout-icon:hover {
+            transform: scale(1.1);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header">
+        <div class="nav-left">
+            <img src="assets/logo-pokemon.png" alt="Logo">
+        </div>
+        <div class="nav-right">
+            <a href="dashboard.html" class="logout-icon">
+                <i class="fas fa-times-circle"></i>
+            </a>
+        </div>
+    </header>
+
+    <div class="battle-container">
+        
+        <div class="scoreboard">
+            <div class="score-text" style="color: #00d2ff;">PLAYER</div>
+            <div class="score-text" style="font-size: 30px; letter-spacing: 2px;">VS</div>
+            <div class="score-text" style="color: #ff4757;">ENEMY</div>
+        </div>
+
+        <div class="bot-area">
+            <img src="assets/bot.png" alt="Giovanni Team Rocket" class="bot-char">
+        </div>
+
+        <div class="vs-text">VS</div>
+
+        <div class="player-area">
+            <img id="battle-trainer" src="" alt="Trainer" class="player-char">
+        </div>
+
+        <div class="battle-controls">
+            <button class="btn-action btn-attack" title="Attack">
+                <i class="fas fa-fire"></i>
+            </button>
+            <button class="btn-action btn-skill" title="Skill">
+                <i class="fas fa-khanda"></i>
+            </button>
+            <button class="btn-action btn-defend" title="Defend">
+                <i class="fas fa-shield-alt"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Ambil karakter yang dipilih
+        const selectedChar = localStorage.getItem('selectedCharacter');
+        
+        const trainerImg = document.getElementById('battle-trainer');
+        const pokemonImg = document.getElementById('battle-pokemon');
+
+        // Logic penentuan gambar (Sesuai file yang kamu punya)
+        if (selectedChar === 'candela') {
+            trainerImg.src = 'assets/candela-removebg.png';
+        } 
+        else if (selectedChar === 'blanche') {
+            trainerImg.src = 'assets/blanche-removebg.jpg';
+        } 
+        else if (selectedChar === 'spark') {
+            trainerImg.src = 'assets/spark-removebg.jpg';
+        } 
+        else {
+            // Default kalau belum pilih
+            trainerImg.src = 'assets/candela-removebg.png';
+        }
+    </script>
+
+</body>
+</html>

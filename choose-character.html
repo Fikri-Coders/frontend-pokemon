@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Character</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h1 class="page-title">Choose Your Character!</h1>
+
+    <div class="character-container">
+        
+        <div class="char-card card-blue">
+            <h3 class="char-name">BLANCHE</h3>
+            <img src="assets/blanche.png" alt="Blanche" class="char-img">
+            <button class="btn-select" onclick="selectCharacter('blanche')">SELECT</button>
+
+        </div>
+
+        <div class="char-card card-red">
+            <h3 class="char-name">CANDELA</h3>
+            <img src="assets/candela.png" alt="Candela" class="char-img">
+            <button class="btn-select" onclick="selectCharacter('candela')">SELECT</button>
+        </div>
+
+        <div class="char-card card-yellow">
+            <h3 class="char-name">SPARK</h3>
+            <img src="assets/spark.png" alt="Spark" class="char-img">
+            <button class="btn-select" onclick="selectCharacter('spark')">SELECT</button>
+        </div>
+
+    </div>
+
+    <script>
+        function selectCharacter(charName) {
+            // 1. Simpan nama karakter ke LocalStorage
+            localStorage.setItem('selectedCharacter', charName);
+            // 2. Pindah ke halaman Dashboard
+            window.location.href = 'dashboard.html';
+        }
+    
+        // Pasang fungsi ini ke tombol SELECT
+        // Contoh untuk tombol Candela:
+        // <button class="btn-select" onclick="selectCharacter('candela')">SELECT</button>
+    </script>
+</body>
+</html>

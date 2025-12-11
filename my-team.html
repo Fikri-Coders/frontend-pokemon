@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Team Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+<body>
+
+    <header class="dashboard-header">
+        <div class="nav-left">
+            <img src="assets/logo-pokemon.png" alt="Logo">
+        </div>
+        <div class="nav-center">
+            <a href="my-team.html" style="color: white; text-decoration: none;">My Team</a>
+        </div>
+        <div class="nav-right">
+            <i class="far fa-user-circle"></i>
+            <span>Thunder Boy</span>
+            <a href="dashboard.html" class="logout-icon" style="margin-left: 15px;">
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </header>
+
+    <div class="team-page-container">
+
+        <div class="pokemon-card theme-orange">
+            <div class="card-img-col">
+                <img src="assets/api-removebg.png" alt="Charmander" class="poke-thumb">
+            </div>
+            <div class="card-info-col">
+                <h3 class="poke-name">CHARMANDER</h3>
+                <p class="poke-detail">Nickname: Si Jago merah</p>
+                <p class="poke-detail">Level: 5</p>
+                <p class="poke-detail">Element: Fire</p>
+                
+                <div class="card-actions">
+                    <button class="btn-status btn-orange-fill">ACTIVATED</button>
+                    <button class="btn-icon-action"><i class="fas fa-pen"></i></button>
+                    <button class="btn-icon-action"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pokemon-card theme-green">
+            <div class="card-img-col">
+                <img src="assets/daun-removebg.png" alt="Bulbasaur" class="poke-thumb">
+            </div>
+            <div class="card-info-col">
+                <h3 class="poke-name">BULBASAUR</h3>
+                <p class="poke-detail">Nickname: Daun Hiaju</p>
+                <p class="poke-detail">Level: 3</p>
+                <p class="poke-detail">Element: Grass</p>
+                
+                <div class="card-actions">
+                    <button class="btn-status btn-orange-fill">Set As Active</button>
+                    <button class="btn-icon-action"><i class="fas fa-pen"></i></button>
+                    <button class="btn-icon-action"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-add-new">
+            <i class="fas fa-plus icon-plus-large"></i>
+            <span class="text-catch-new">Catch New Pokemon</span>
+        </div>
+
+    </div>
+
+</body>
+</html>
