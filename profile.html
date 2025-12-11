@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS INTERNAL --- */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            /* Background Hutan */
+            background-image: url('assets/background-pokemon.png'); 
+            background-size: cover;
+            background-position: center top; 
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* --- BACKGROUND GELAP (Overlay) --- */
+        /* Ini trik untuk bikin background dashboard terlihat agak gelap di belakang popup */
+        .overlay-dim {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Hitam transparan 50% */
+            z-index: 50; /* Di atas background, di bawah kartu */
+            backdrop-filter: blur(3px); /* Efek blur dikit biar fokus ke popup */
+        }
+
+        /* --- HEADER NAVIGATION (Visual Saja) --- */
+        .dashboard-header {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 40; /* Di bawah overlay gelap */
+        }
+
+        .nav-left img {
+            height: 60px;
+            width: auto;
+        }
+
+        .nav-center {
+            font-size: 24px;
+            font-weight: 700;
+            color: #FFFFFF;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #FFFFFF;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* --- KARTU PROFIL (POPUP UTAMA) --- */
+        .profile-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100; /* Paling atas */
+            
+            /* Data Layout Card */
+            width: 500px;
+            background: rgba(255, 255, 255, 0.95); /* Putih solid tapi agak transparan dikit */
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Judul Nama (Thunder Boy) */
+        .profile-card h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 0px #FFF, -1px -1px 0 #FFF; /* Outline tipis */
+        }
+
+        /* --- FOTO PROFIL BULAT --- */
+        .profile-pic-container {
+            width: 150px;
+            height: 150px;
+            background-color: #E0E0E0;
+            border-radius: 50%;
+            margin: 0 auto 30px auto; /* Tengah */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 3px solid #2196F3; /* Border Biru sesuai referensi */
+            overflow: hidden;
+        }
+
+        .profile-icon {
+            font-size: 80px;
+            color: #757575; /* Icon abu-abu */
+        }
+
+        /* --- FORM INPUTS --- */
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .form-group i {
+            margin-right: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            background-color: #FFF;
+            font-size: 14px;
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* --- TOMBOL AKSI (ROW) --- */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-profile {
+            flex: 1; /* Bagi rata lebar tombol */
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: #000;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            
+            /* Warna Kuning/Emas sesuai desain */
+            background: linear-gradient(to bottom, #FFD700, #FFAA00);
+            border: 2px solid #FFF; /* Border putih tipis biar pop */
+        }
+
+        .btn-profile:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        /* Tombol Delete agak beda dikit warnanya (opsional, disamakan kuning juga oke) */
+        .btn-delete {
+             background: linear-gradient(to bottom, #FFC107, #FF9800);
+        }
+
+        /* Tombol Close (X) di pojok kartu - Opsional buat UX */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: #999;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .close-btn:hover { color: #333; }
+
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header">
+        <div class="nav-left">
+            <img src="assets/logo-pokemon.png" alt="Logo">
+        </div>
+        <div class="nav-center">
+            My Team
+        </div>
+        <div class="nav-right">
+            <i class="far fa-user-circle"></i>
+            <span>Thunder Boy</span>
+            <i class="fas fa-sign-out-alt" style="margin-left: 15px;"></i>
+        </div>
+    </header>
+
+    <div class="overlay-dim"></div>
+
+    <div class="profile-card">
+        <a href="dashboard.html" class="close-btn">&times;</a>
+
+        <h2>Thunder Boy</h2>
+
+        <div class="profile-pic-container">
+            <i class="fas fa-user profile-icon"></i>
+        </div>
+
+        <form action="dashboard.html">
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Username</label>
+                <input type="text" value="Thunder Boy">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-key"></i> Password</label>
+                <input type="password" value="********">
+            </div>
+
+            <div class="action-buttons">
+                <button type="submit" class="btn-profile">Save Changes</button>
+                
+                <button type="button" class="btn-profile btn-delete" onclick="window.location.href='login.html'">Delete Account</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
