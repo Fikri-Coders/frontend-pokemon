@@ -79,7 +79,6 @@
     margin-bottom: 10px;
 }
 
-/* Variant Warna */
 .card-blue {
     border: 4px solid #2196F3;
 }
@@ -103,4 +102,6 @@
 .card-yellow .btn-select {
     background-color: #FFC107;
 }
+
+
 

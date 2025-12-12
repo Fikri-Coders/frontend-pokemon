@@ -30,16 +30,15 @@
         }
 
         /* --- BACKGROUND GELAP (Overlay) --- */
-        /* Ini trik untuk bikin background dashboard terlihat agak gelap di belakang popup */
         .overlay-dim {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Hitam transparan 50% */
-            z-index: 50; /* Di atas background, di bawah kartu */
-            backdrop-filter: blur(3px); /* Efek blur dikit biar fokus ke popup */
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 50;
+            backdrop-filter: blur(3px);
         }
 
         /* --- HEADER NAVIGATION (Visual Saja) --- */
@@ -53,7 +52,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 40; /* Di bawah overlay gelap */
+            z-index: 40;
         }
 
         .nav-left img {
@@ -84,11 +83,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 100; /* Paling atas */
+            z-index: 100;
             
             /* Data Layout Card */
             width: 500px;
-            background: rgba(255, 255, 255, 0.95); /* Putih solid tapi agak transparan dikit */
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             padding: 40px;
             text-align: center;
@@ -101,7 +100,7 @@
             font-weight: 700;
             color: #000;
             margin-bottom: 20px;
-            text-shadow: 1px 1px 0px #FFF, -1px -1px 0 #FFF; /* Outline tipis */
+            text-shadow: 1px 1px 0px #FFF, -1px -1px 0 #FFF;
         }
 
         /* --- FOTO PROFIL BULAT --- */
@@ -110,17 +109,17 @@
             height: 150px;
             background-color: #E0E0E0;
             border-radius: 50%;
-            margin: 0 auto 30px auto; /* Tengah */
+            margin: 0 auto 30px auto;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 3px solid #2196F3; /* Border Biru sesuai referensi */
+            border: 3px solid #2196F3;
             overflow: hidden;
         }
 
         .profile-icon {
             font-size: 80px;
-            color: #757575; /* Icon abu-abu */
+            color: #757575;
         }
 
         /* --- FORM INPUTS --- */
@@ -161,7 +160,7 @@
         }
 
         .btn-profile {
-            flex: 1; /* Bagi rata lebar tombol */
+            flex: 1;
             padding: 12px;
             border: none;
             border-radius: 25px;
@@ -173,9 +172,8 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
             transition: transform 0.2s;
             
-            /* Warna Kuning/Emas sesuai desain */
             background: linear-gradient(to bottom, #FFD700, #FFAA00);
-            border: 2px solid #FFF; /* Border putih tipis biar pop */
+            border: 2px solid #FFF;
         }
 
         .btn-profile:hover {
@@ -183,7 +181,6 @@
             filter: brightness(1.1);
         }
 
-        /* Tombol Delete agak beda dikit warnanya (opsional, disamakan kuning juga oke) */
         .btn-delete {
              background: linear-gradient(to bottom, #FFC107, #FF9800);
         }

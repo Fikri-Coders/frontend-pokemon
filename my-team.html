@@ -31,38 +31,38 @@
 
     <div class="team-page-container">
 
-        <div class="pokemon-card theme-orange">
+        <div class="pokemon-card theme-orange" data-active="true">
             <div class="card-img-col">
                 <img src="assets/api-removebg.png" alt="Charmander" class="poke-thumb">
             </div>
             <div class="card-info-col">
                 <h3 class="poke-name">CHARMANDER</h3>
-                <p class="poke-detail">Nickname: Si Jago merah</p>
+                <p class="poke-detail">Nickname: <span class="nickname-text">Si Jago merah</span></p>
                 <p class="poke-detail">Level: 5</p>
                 <p class="poke-detail">Element: Fire</p>
                 
                 <div class="card-actions">
-                    <button class="btn-status btn-orange-fill">ACTIVATED</button>
-                    <button class="btn-icon-action"><i class="fas fa-pen"></i></button>
-                    <button class="btn-icon-action"><i class="fas fa-trash"></i></button>
+                    <button class="btn-status btn-orange-fill btn-toggle-active">ACTIVATED</button>
+                    <button class="btn-icon-action btn-edit"><i class="fas fa-pen"></i></button>
+                    <button class="btn-icon-action btn-delete"><i class="fas fa-trash"></i></button>
                 </div>
             </div>
         </div>
 
-        <div class="pokemon-card theme-green">
+        <div class="pokemon-card theme-green" data-active="false">
             <div class="card-img-col">
                 <img src="assets/daun-removebg.png" alt="Bulbasaur" class="poke-thumb">
             </div>
             <div class="card-info-col">
                 <h3 class="poke-name">BULBASAUR</h3>
-                <p class="poke-detail">Nickname: Daun Hiaju</p>
+                <p class="poke-detail">Nickname: <span class="nickname-text">Daun Hiaju</span></p>
                 <p class="poke-detail">Level: 3</p>
                 <p class="poke-detail">Element: Grass</p>
                 
                 <div class="card-actions">
-                    <button class="btn-status btn-orange-fill">Set As Active</button>
-                    <button class="btn-icon-action"><i class="fas fa-pen"></i></button>
-                    <button class="btn-icon-action"><i class="fas fa-trash"></i></button>
+                    <button class="btn-status btn-orange-fill btn-toggle-active">Set As Active</button>
+                    <button class="btn-icon-action btn-edit"><i class="fas fa-pen"></i></button>
+                    <button class="btn-icon-action btn-delete"><i class="fas fa-trash"></i></button>
                 </div>
             </div>
         </div>
@@ -73,6 +73,153 @@
         </div>
 
     </div>
+
+    <script>
+        // Fungsi Edit Nickname
+        document.querySelectorAll('.btn-edit').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.pokemon-card');
+                const nicknameSpan = card.querySelector('.nickname-text');
+                const currentNickname = nicknameSpan.textContent;
+                
+                const newNickname = prompt('Masukkan nickname baru:', currentNickname);
+                
+                if (newNickname && newNickname.trim() !== '') {
+                    nicknameSpan.textContent = newNickname.trim();
+                }
+            });
+        });
+
+        // Fungsi Toggle Active/Inactive
+        document.querySelectorAll('.btn-toggle-active').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.pokemon-card');
+                const isActive = card.getAttribute('data-active') === 'true';
+                
+                if (isActive) {
+                    // Jika sudah aktif, ubah menjadi tidak aktif
+                    card.setAttribute('data-active', 'false');
+                    this.textContent = 'Set As Active';
+                } else {
+                    // Jika belum aktif, ubah semua card menjadi tidak aktif dulu
+                    document.querySelectorAll('.pokemon-card').forEach(c => {
+                        c.setAttribute('data-active', 'false');
+                        const statusBtn = c.querySelector('.btn-toggle-active');
+                        statusBtn.textContent = 'Set As Active';
+                    });
+                    
+                    // Set card yang diklik menjadi aktif
+                    card.setAttribute('data-active', 'true');
+                    this.textContent = 'ACTIVATED';
+                }
+            });
+        });
+
+        // Fungsi Hapus Card
+        document.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.pokemon-card');
+                const pokemonName = card.querySelector('.poke-name').textContent;
+                
+                if (confirm(`Yakin ingin menghapus ${pokemonName} dari team?`)) {
+                    card.remove();
+                }
+            });
+        });
+
+        // Fungsi Catch New Pokemon
+        document.querySelector('.card-add-new').addEventListener('click', function() {
+            const pokemonName = prompt('Masukkan nama Pokemon:');
+            if (!pokemonName || pokemonName.trim() === '') return;
+            
+            const nickname = prompt('Masukkan nickname:', pokemonName);
+            if (nickname === null) return;
+            
+            const level = prompt('Masukkan level:', '1');
+            if (level === null) return;
+            
+            const element = prompt('Masukkan element (Fire/Grass/Water/Electric/etc):', 'Normal');
+            if (element === null) return;
+            
+            const imageUrl = prompt('Masukkan URL gambar Pokemon (atau kosongkan untuk default):', '');
+            
+            const themes = ['theme-orange', 'theme-green'];
+            const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+            
+            const newCard = document.createElement('div');
+            newCard.className = `pokemon-card ${randomTheme}`;
+            newCard.setAttribute('data-active', 'false');
+            
+            const defaultImage = imageUrl || 'assets/api-removebg.png';
+            
+            newCard.innerHTML = `
+                <div class="card-img-col">
+                    <img src="${defaultImage}" alt="${pokemonName}" class="poke-thumb" onerror="this.src='assets/api-removebg.png'">
+                </div>
+                <div class="card-info-col">
+                    <h3 class="poke-name">${pokemonName.toUpperCase()}</h3>
+                    <p class="poke-detail">Nickname: <span class="nickname-text">${nickname || pokemonName}</span></p>
+                    <p class="poke-detail">Level: ${level || '1'}</p>
+                    <p class="poke-detail">Element: ${element || 'Normal'}</p>
+                    
+                    <div class="card-actions">
+                        <button class="btn-status btn-orange-fill btn-toggle-active">Set As Active</button>
+                        <button class="btn-icon-action btn-edit"><i class="fas fa-pen"></i></button>
+                        <button class="btn-icon-action btn-delete"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+            
+            const container = document.querySelector('.team-page-container');
+            const addNewCard = document.querySelector('.card-add-new');
+            container.insertBefore(newCard, addNewCard);
+            
+            // Attach event listeners ke card baru
+            attachEventListeners(newCard);
+        });
+
+        // Fungsi untuk attach event listeners ke card
+        function attachEventListeners(card) {
+            const editBtn = card.querySelector('.btn-edit');
+            const deleteBtn = card.querySelector('.btn-delete');
+            const toggleBtn = card.querySelector('.btn-toggle-active');
+            
+            editBtn.addEventListener('click', function() {
+                const nicknameSpan = card.querySelector('.nickname-text');
+                const currentNickname = nicknameSpan.textContent;
+                const newNickname = prompt('Masukkan nickname baru:', currentNickname);
+                
+                if (newNickname && newNickname.trim() !== '') {
+                    nicknameSpan.textContent = newNickname.trim();
+                }
+            });
+            
+            deleteBtn.addEventListener('click', function() {
+                const pokemonName = card.querySelector('.poke-name').textContent;
+                if (confirm(`Yakin ingin menghapus ${pokemonName} dari team?`)) {
+                    card.remove();
+                }
+            });
+            
+            toggleBtn.addEventListener('click', function() {
+                const isActive = card.getAttribute('data-active') === 'true';
+                
+                if (isActive) {
+                    card.setAttribute('data-active', 'false');
+                    this.textContent = 'Set As Active';
+                } else {
+                    document.querySelectorAll('.pokemon-card').forEach(c => {
+                        c.setAttribute('data-active', 'false');
+                        const statusBtn = c.querySelector('.btn-toggle-active');
+                        statusBtn.textContent = 'Set As Active';
+                    });
+                    
+                    card.setAttribute('data-active', 'true');
+                    this.textContent = 'ACTIVATED';
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
